@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<html>
+<head>
+    <title>Chat App Test</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link>
+</head>
+<body>
+{% block content %}
+    <div id="chat-body" class="panel panel-default">
+        <div class="panel-heading">Test App</div>
+        <div id="message-list-div" class="panel-body">
+            <ul id="message-list" class="list-group">
+                {% for obj in chat %}
+                    {% if obj.author == request.user %}
+                        <div class="panel panel-default text-right">
+                            <div class="panel-heading">{{ obj.author }}</div>
+                            <div>{{ obj.message }}</div>
+                        </div>
+                    {% else %}
+                        <div class="panel panel-default text-left">
+                            <div class="panel-heading">{{ obj.author }}</div>
+                            <div>{{ obj.message }}</div>
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    <li class="text-right list-group-item">No messages yet!</li>
+                {% endfor %}
+                <script>
+                    var chatlist = document.getElementById('message-list-div');
+                    chatlist.scrollTop = chatlist.scrollHeight;
+                </script>
+            </ul>
+        </div>
+    </div>
+
+    <form id="chat-form" method="post" action="/post/">
+        <div id="chat-bottom" class="input-group">
+            <input type="text" id="chat" name="chat" class="form-control"/>
+            <span class="input-group-btn">
+                <input class="btn btn-default" id="send" type="submit" value="Send"/>
+            </span>
+        </div>
+    </form>
+{% endblock %}
+</body>
+
+<script src="{% static 'js/main.js' %}"></script>
+
+
+</html>

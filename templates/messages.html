@@ -1,0 +1,15 @@
+{% for obj in chat %}
+    {% if obj.author == request.user %}
+        <div class="panel panel-default text-right">
+            <div class="panel-heading">{{ obj.author }}</div>
+            <div>{{ obj.message }}</div>
+        </div>
+    {% else %}
+        <div class="panel panel-default text-left">
+            <div class="panel-heading">{{ obj.author }}</div>
+            <div>{{ obj.message }}</div>
+        </div>
+    {% endif %}
+{% empty %}
+    <li class="text-right list-group-item">No messages yet!</li>
+{% endfor %}
